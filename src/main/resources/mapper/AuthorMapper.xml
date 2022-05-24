@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.worker.dao.AuthorMapper">
+
+    <!--<resultMap id="painterMap" type="Painter">-->
+    <!--    <id property="id" column="_id"/>-->
+    <!--    <result property="des" column="des"/>-->
+    <!--    <result property="entry" column="entry"/>-->
+    <!--    <result property="name" column="name"/>-->
+    <!--    <result property="src" column="src"/>-->
+    <!--</resultMap>-->
+    <!--List<Painter> getAll();-->
+    <select id="getAll" resultType="Author">
+        match (a:Author) return id(a) as id,a.des as des,a.entry as entry,a.name as name,a.src as src;
+    </select>
+    <!--Painter getPainterByName(@Param("name") String name);-->
+    <select id="getAuthorByName" resultType="Author">
+        match (a:Author) where a.name = #{name} return id(a) as id,a.des as des,a.entry as entry,a.name as name,a.src as src;
+    </select>
+
+    <!--List<Author> getLikelyAuthors(@Param("name") String name);-->
+    <select id="getLikelyAuthors" resultType="Author">
+        match (a:Author) where a.name contains #{name} return id(a) as id,a.des as des,a.entry as entry,a.name as name,a.src as src
+    </select>
+</mapper>

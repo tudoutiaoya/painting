@@ -1,8 +1,8 @@
 package com.xxx.test;
 
 
-import com.worker.bean.Painter;
-import com.worker.dao.PainterMapper;
+import com.worker.bean.Author;
+import com.worker.dao.AuthorMapper;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -11,7 +11,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -26,14 +25,14 @@ public class TestDao {
     @Autowired
     SqlSession sqlSession;
     @Autowired
-    PainterMapper painterMapper;
+    AuthorMapper painterMapper;
     @Autowired
     DataSource dataSource;
 
     @Test
     public void test1() throws SQLException {
-        PainterMapper painterMapper = sqlSession.getMapper(PainterMapper.class);
-        Painter painter = painterMapper.getPainterByName();
-        System.out.println(painter);
+        AuthorMapper painterMapper = sqlSession.getMapper(AuthorMapper.class);
+        List<Author> list = painterMapper.getLikelyAuthors("周");
+        System.out.println(list);
     }
 }

@@ -1,26 +1,37 @@
 package com.worker.bean;
 
+import java.util.List;
+
 /**
  * @Classname Painter
  * @Version 1.0.0
  * @Description TODO
  */
-public class Painter {
+public class Author {
+    private static final int identify = 0;
     private Integer id;
     private String des;
     private String entry;
     private String name;
     private String src;
-
-    public Painter() {
+    private List<Author> relativeAuthors;
+    public Author() {
     }
 
-    public Painter(Integer id, String des, String entry, String name, String src) {
+    public Author(Integer id, String des, String entry, String name, String src) {
         this.id = id;
         this.des = des;
         this.entry = entry;
         this.name = name;
         this.src = src;
+    }
+
+    public List<Author> getRelativeAuthors() {
+        return relativeAuthors;
+    }
+
+    public void setRelativeAuthors(List<Author> relativeAuthors) {
+        this.relativeAuthors = relativeAuthors;
     }
 
     public Integer getId() {
@@ -65,12 +76,13 @@ public class Painter {
 
     @Override
     public String toString() {
-        return "Painter{" +
+        return "Author{" +
                 "id=" + id +
                 ", des='" + des + '\'' +
                 ", entry='" + entry + '\'' +
                 ", name='" + name + '\'' +
                 ", src='" + src + '\'' +
+                ", relativeAuthors=" + relativeAuthors +
                 '}';
     }
 }
