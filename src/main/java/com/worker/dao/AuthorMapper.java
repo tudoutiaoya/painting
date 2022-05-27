@@ -12,4 +12,6 @@ public interface AuthorMapper {
     List<Author> getLikelyAuthors(@Param("name") String name);
 
     Author getAuthorByName(@Param("name") String name);
+
+    List<String> getLikelyAuthorOnlyName(@Param("name")String name);
 }

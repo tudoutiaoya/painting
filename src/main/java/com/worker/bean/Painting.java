@@ -8,7 +8,7 @@ import java.util.List;
  * @Description TODO
  */
 public class Painting {
-    private static final int identify = 1;
+    private int identify = 1;
     private Integer id;
     private String src;
     private String des;
@@ -29,6 +29,14 @@ public class Painting {
     }
 
     public Painting() {
+    }
+
+    public int getIdentify() {
+        return identify;
+    }
+
+    public void setIdentify(int identify) {
+        this.identify = identify;
     }
 
     public Painting(Integer id, String src, String des, String name, String size, String authorName, String authorDes, String poem, String seal) {

@@ -22,4 +22,14 @@ public class SearchService {
         List<Author> likelyAuthors = authorMapper.getLikelyAuthors(name);
         return likelyAuthors;
     }
+
+    public List<Author> getAllAuthor() {
+        List<Author> all = authorMapper.getAll();
+        return all;
+    }
+
+    public List<String> getLikelyAuthorOnlyName(String name) {
+        List<String> likelyAuthorOnlyName = authorMapper.getLikelyAuthorOnlyName(name);
+        return likelyAuthorOnlyName;
+    }
 }

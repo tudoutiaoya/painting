@@ -8,14 +8,23 @@ import java.util.List;
  * @Description TODO
  */
 public class Author {
-    private static final int identify = 0;
+    private int identify = 0;
     private Integer id;
     private String des;
     private String entry;
     private String name;
     private String src;
+    private List<Painting> relativePaintings;
     private List<Author> relativeAuthors;
     public Author() {
+    }
+
+    public List<Painting> getRelativePaintings() {
+        return relativePaintings;
+    }
+
+    public void setRelativePaintings(List<Painting> relativePaintings) {
+        this.relativePaintings = relativePaintings;
     }
 
     public Author(Integer id, String des, String entry, String name, String src) {
@@ -24,6 +33,14 @@ public class Author {
         this.entry = entry;
         this.name = name;
         this.src = src;
+    }
+
+    public int getIdentify() {
+        return identify;
+    }
+
+    public void setIdentify(int identify) {
+        this.identify = identify;
     }
 
     public List<Author> getRelativeAuthors() {

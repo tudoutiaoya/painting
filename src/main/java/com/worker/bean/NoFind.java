@@ -6,6 +6,29 @@ package com.worker.bean;
  * @Description TODO
  */
 public class NoFind {
-    private static int identify = 2;
+    private int identify = 2;
     private String notFount = "没有找到相应内容";
+
+    public NoFind() {
+    }
+
+    public NoFind(String notFount) {
+        this.notFount = notFount;
+    }
+
+    public int getIdentify() {
+        return identify;
+    }
+
+    public void setIdentify(int identify) {
+        this.identify = identify;
+    }
+
+    public String getNotFount() {
+        return notFount;
+    }
+
+    public void setNotFount(String notFount) {
+        this.notFount = notFount;
+    }
 }

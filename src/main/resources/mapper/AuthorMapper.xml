@@ -24,4 +24,9 @@
     <select id="getLikelyAuthors" resultType="Author">
         match (a:Author) where a.name contains #{name} return id(a) as id,a.des as des,a.entry as entry,a.name as name,a.src as src
     </select>
+
+    <!--List<String> getLikelyAuthorOnlyName(@Param("name")String name);-->
+    <select id="getLikelyAuthorOnlyName" resultType="string">
+        match (a:Author) where a.name contains #{name} return a.name as name;
+    </select>
 </mapper>
