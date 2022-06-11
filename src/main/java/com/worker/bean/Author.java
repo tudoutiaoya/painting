@@ -11,7 +11,7 @@ public class Author {
     private int identify = 0;
     private Integer id;
     private String des;
-    private String entry;
+    private Entry entry;
     private String name;
     private String src;
     private List<Painting> relativePaintings;
@@ -27,12 +27,15 @@ public class Author {
         this.relativePaintings = relativePaintings;
     }
 
-    public Author(Integer id, String des, String entry, String name, String src) {
+    public Author(int identify, Integer id, String des, Entry entry, String name, String src, List<Painting> relativePaintings, List<Author> relativeAuthors) {
+        this.identify = identify;
         this.id = id;
         this.des = des;
         this.entry = entry;
         this.name = name;
         this.src = src;
+        this.relativePaintings = relativePaintings;
+        this.relativeAuthors = relativeAuthors;
     }
 
     public int getIdentify() {
@@ -67,11 +70,11 @@ public class Author {
         this.des = des;
     }
 
-    public String getEntry() {
+    public Entry getEntry() {
         return entry;
     }
 
-    public void setEntry(String entry) {
+    public void setEntry(Entry entry) {
         this.entry = entry;
     }
 

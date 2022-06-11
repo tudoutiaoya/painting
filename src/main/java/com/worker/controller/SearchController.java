@@ -11,9 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
 
 /**
  * @Classname SearchController
@@ -29,8 +28,6 @@ public class SearchController {
     @RequestMapping("/search")
     @ResponseBody
     public Object Search(@Param("name") String name) {
-
-
         List<Author> authors = searchService.searchAuthor(name);
 
         if (authors.size() > 0) {
@@ -62,6 +59,5 @@ public class SearchController {
     public Object SearchOnlyName(@Param("name") String name) {
         return searchService.getLikelyAuthorOnlyName(name);
     }
-
 
 }

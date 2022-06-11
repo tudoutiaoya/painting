@@ -4,29 +4,40 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.worker.dao.AuthorMapper">
 
-    <!--<resultMap id="painterMap" type="Painter">-->
-    <!--    <id property="id" column="_id"/>-->
-    <!--    <result property="des" column="des"/>-->
-    <!--    <result property="entry" column="entry"/>-->
-    <!--    <result property="name" column="name"/>-->
-    <!--    <result property="src" column="src"/>-->
-    <!--</resultMap>-->
+    <!--封装 查询的Author带 entry-->
+    <resultMap id="AuthorWithEntry" type="Author">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="des" property="des"/>
+        <result column="src" property="src"/>
+        <association property="entry" select="com.worker.dao.AuthorMapper.getEntryByName" column="name">
+        </association>
+    </resultMap>
+    <!--Entry getEntryByName(@Param("name") String name);-->
+    <select id="getEntryByName" resultType="Entry">
+        match (d:Details) where d.name = #{name} return d.name as name, d.styleName as styleName,
+        d.pseudonym as pseudonym, d.country as country, d.nation as nation,
+        d.ancestralHome as ancestralHome, d.birthplace as birthplace, d.birthData as birthData,
+        d.deadData as deadData, d.occupation as occupation, d.sex as sex, d.paintings as paintings,
+        d.graduateSchool as graduateSchool, d.achievements as achievements;
+    </select>
+
     <!--List<Painter> getAll();-->
-    <select id="getAll" resultType="Author">
-        match (a:Author) return id(a) as id,a.des as des,a.entry as entry,a.name as name,a.src as src;
+    <select id="getAll" resultMap="AuthorWithEntry">
+        match (a:Authors) return id(a) as id,a.des as des,a.name as name,a.src as src;
     </select>
     <!--Painter getPainterByName(@Param("name") String name);-->
-    <select id="getAuthorByName" resultType="Author">
-        match (a:Author) where a.name = #{name} return id(a) as id,a.des as des,a.entry as entry,a.name as name,a.src as src;
+    <select id="getAuthorByName" resultMap="AuthorWithEntry">
+        match (a:Authors) where a.name = #{name} return id(a) as id,a.des as des,a.name as name,a.src as src;
     </select>
 
     <!--List<Author> getLikelyAuthors(@Param("name") String name);-->
-    <select id="getLikelyAuthors" resultType="Author">
-        match (a:Author) where a.name contains #{name} return id(a) as id,a.des as des,a.entry as entry,a.name as name,a.src as src
+    <select id="getLikelyAuthors" resultMap="AuthorWithEntry">
+        match (a:Authors) where a.name contains #{name} return id(a) as id,a.des as des,a.name as name,a.src as src
     </select>
 
     <!--List<String> getLikelyAuthorOnlyName(@Param("name")String name);-->
     <select id="getLikelyAuthorOnlyName" resultType="string">
-        match (a:Author) where a.name contains #{name} return a.name as name;
+        match (a:Authors) where a.name contains #{name} return a.name as name;
     </select>
 </mapper>
