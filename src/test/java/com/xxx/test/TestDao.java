@@ -1,8 +1,6 @@
 package com.xxx.test;
 
 
-import com.worker.bean.Author;
-import com.worker.dao.AuthorMapper;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,15 +22,15 @@ import java.util.List;
 public class TestDao {
     @Autowired
     SqlSession sqlSession;
-    @Autowired
-    AuthorMapper painterMapper;
+    //@Autowired
+    //AuthorMapper painterMapper;
     @Autowired
     DataSource dataSource;
 
     @Test
     public void test1() throws SQLException {
-        AuthorMapper painterMapper = sqlSession.getMapper(AuthorMapper.class);
-        List<Author> list = painterMapper.getLikelyAuthors("周");
-        System.out.println(list);
+        //AuthorMapper painterMapper = sqlSession.getMapper(AuthorMapper.class);
+        //List<Author> list = painterMapper.getLikelyAuthors("周");
+        //System.out.println(list);
     }
 }
