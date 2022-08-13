@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.worker.dao.PaintingMapper">
+
+    <sql id="returnType">
+        p.id as id, p.authorName as authorName, p.paintingName as paintingName,
+        p.paintingSize as paintingSize, p.src as src
+    </sql>
+
+    <!--public List<Painting> getPaintingByAuthorName(String authorName);-->
+    <select id="getPaintingByAuthorName" resultType="Painting">
+        match (a:Author)-[]-(p:Painting) where a.authorName= #{authorName}
+        return <include refid="returnType"/>
+    </select>
+    <!--public List<Painting> getPaintingSameStyle(String paintingName);-->
+    <select id="getPaintingSameStyle" resultType="com.worker.model.domain.Painting">
+        match (p2:Painting)-[:painting_paintingStyle_style]-(:PaintingStyle)-[:painting_paintingStyle_style]-(p:Painting)
+        where p2.paintingName = #{paintingName}
+        return <include refid="returnType"></include>
+    </select>
+    <!--public List<Painting> getPaintingSameType(String paintingName);-->
+    <select id="getPaintingSameType" resultType="com.worker.model.domain.Painting">
+        match (p2:Painting)-[:painting_paintingType_type]-(:PaintingType)-[:painting_paintingType_type]-(p:Painting)
+        where p2.paintingName = #{paintingName}
+        return <include refid="returnType"></include>
+    </select>
+    <!--public List<Poem> getPaintingPoems(String paintingName);-->
+    <select id="getPaintingPoems" resultType="com.worker.model.domain.Poem">
+        match (poem:Poem)-[:painting_extraPoem_poem]-(p:Painting) where p.paintingName = #{paintingName}
+        return poem.id as id, poem.author as author, poem.content as content
+    </select>
+
+    <select id="getSealByPaintingId" parameterType="string" resultType="com.worker.model.domain.Seal">
+        match(p:Painting)-[:painting_includeSeal_seal]-(s:Seal)
+        where p.id = #{id}
+        return s.id as id, s.seal as seal
+    </select>
+    <!--public PaintingType getTypeByPaintingId(String id);-->
+    <select id="getTypeByPaintingId" resultType="com.worker.model.domain.PaintingType">
+        match (t:PaintingType)-[:painting_paintingType_type]-(p:Painting)
+        where p.id = #{id}
+        return t.id as id, t.type as type
+    </select>
+    <!--public PaintingStyle getStyleByPaintingId(String id);-->
+    <select id="getStyleByPaintingId" resultType="com.worker.model.domain.PaintingStyle">
+        match (s:PaintingStyle)-[:painting_paintingStyle_style]-(p:Painting)
+        where p.id = #{id}
+        return s.id as id, s.style as style
+    </select>
+    <!--public Painting getPaintingByPaintingName(String paintingName);-->
+    <select id="getPaintingByPaintingName" resultType="com.worker.model.domain.Painting">
+        match(p:Painting) where p.paintingName= #{paintingName}
+        return <include refid="returnType"></include>
+    </select>
+    <!--public List<Painting> getPaintingByStyleId(String id);-->
+    <select id="getPaintingByStyleId" resultType="com.worker.model.domain.Painting">
+        match(s:PaintingStyle)-[]-(p:Painting)
+        where s.id = #{id}
+        return <include refid="returnType"></include>
+    </select>
+    <!--List<Painting> getPaintingByPoemId(String id);-->
+    <select id="getPaintingByPoemId" resultType="com.worker.model.domain.Painting">
+        match(p:Painting)-[]-(poem:Poem)
+        where poem.id = #{id}
+        return <include refid="returnType"></include>
+    </select>
+    <!--List<Painting> getPaintingBySealId(String id);-->
+    <select id="getPaintingBySealId" resultType="com.worker.model.domain.Painting">
+        match (s:Seal)-[:painting_includeSeal_seal]-(p:Painting)
+        where s.id = #{id}
+        return <include refid="returnType"></include>
+    </select>
+
+</mapper>

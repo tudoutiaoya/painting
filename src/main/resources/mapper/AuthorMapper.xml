@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.worker.dao.AuthorMapper">
+
+    <sql id="returnType">
+        a.id as id, a.authorDes as authorDes, a.authorName as authorName,
+        a.src as src, a.birthDate as birthDate, a.country as country,
+        a.deadDate as deadDate, a.hao as hao, a.zi as zi
+    </sql>
+    <!--public List<Author> getSameAreaAuthor(String authorName);-->
+    <select id="getSameAreaAuthor" resultType="Author">
+        match (a2:Author)-[]-(:Area)-[]-(a:Author) where a2.authorName = #{authorName}
+        return <include refid="returnType"/>
+    </select>
+    <!--public List<Author> getSameStyleAuthor(String authorName);-->
+    <select id="getSameStyleAuthor" resultType="Author">
+        match (a2:Author)-[]-(:PaintingStyle)-[]-(a:Author) where a2.authorName = #{authorName}
+        return <include refid="returnType"/>
+     </select>
+    <!--public List<Author> getAuthorFriends(String authorName);-->
+    <select id="getAuthorFriends" resultType="Author">
+        match(a2:Author)-[:author_friends]-(a:Author) where a2.authorName = #{authorName}
+        return <include refid="returnType"/>
+    </select>
+    <!--public List<Author> getAuthorByPaintingName(String paintingName);-->
+    <select id="getAuthorByPaintingName" resultType="com.worker.model.domain.Author">
+        match (p:Painting)-[:authro_drawPainting_painting]-(a:Author) where p.paintingName= #{paintingName}
+        return <include refid="returnType"></include>
+    </select>
+    <!--public List<Author> getAuthorBySeal(String paintingName);-->
+    <select id="getAuthorBySeal" resultType="com.worker.model.domain.Author">
+        match (p:Painting)-[]-(s:Seal)-[]-(a:Author) where p.paintingName= #{paintingName}
+        return <include refid="returnType"></include>
+    </select>
+    <!--public Area getAreaByAuthorName(String authorName);-->
+    <select id="getAreaByAuthorName" resultType="com.worker.model.domain.Area">
+        match (area:Area)-[:author_bornIn_atea]-(a:Author) where a.authorName= #{authorName}
+        return area.id as id, area.reginon as reginon
+    </select>
+    <!--public List<Seal> getSealsByAuthorName(String authorName);-->
+    <select id="getSealsByAuthorName" resultType="com.worker.model.domain.Seal">
+        match (s:Seal)-[:author_createSeal_seal]-(a:Author) where a.authorName= #{authorName}
+        return s.id as id, s.seal as seal
+    </select>
+    <!--public List<Style> getAuthorGoodAtStyles(String authorName);-->
+    <select id="getAuthorGoodAtStyles" resultType="com.worker.model.domain.PaintingStyle">
+        match(s:PaintingStyle)-[:author_goodAt_style]-(a:Author) where a.authorName = #{authorName}
+        return s.id as id, s.style as style
+    </select>
+    <!--public List<Author> getAuthorsByStyleId(String id);-->
+    <select id="getAuthorsByStyleId" resultType="com.worker.model.domain.Author">
+        match(s:PaintingStyle)-[]-(a:Author)
+        where s.id = #{id}
+        return <include refid="returnType"></include>
+    </select>
+    <!--List<Author> getAuthorsByPoemId(String id);-->
+    <select id="getAuthorsByPoemId" resultType="com.worker.model.domain.Author">
+
+    </select>
+    <!--List<Author> getAuthorsByArea(String id);-->
+    <select id="getAuthorsByAreaId" resultType="com.worker.model.domain.Author">
+        match(area:Area)-[:author_bornIn_atea]-(a:Author)
+        where area.id = #{id}
+        return <include refid="returnType"></include>
+    </select>
+    <!--List<Author> getAuthorsBySealId(String id);-->
+    <select id="getAuthorsBySealId" resultType="com.worker.model.domain.Author">
+        match(s:Seal)-[:author_createSeal_seal]-(a:Author)
+        where s.id = #{id}
+        return <include refid="returnType"></include>
+    </select>
+
+
+</mapper>
