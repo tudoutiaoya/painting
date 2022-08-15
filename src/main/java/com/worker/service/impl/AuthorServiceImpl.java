@@ -2,7 +2,10 @@ package com.worker.service.impl;
 
 import com.worker.dao.AuthorMapper;
 import com.worker.dao.PaintingMapper;
+import com.worker.dao.SealMapper;
+import com.worker.dao.StyleMapper;
 import com.worker.model.domain.*;
+import com.worker.model.vo.AuthorVo;
 import com.worker.model.vo.PaintingVo;
 import com.worker.service.AuthorService;
 
@@ -23,6 +26,12 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Autowired
     private PaintingMapper paintingMapper;
+
+    @Autowired
+    private SealMapper sealMapper;
+
+    @Autowired
+    private StyleMapper styleMapper;
 
     public Map<String, Object> searchAuthorRelative(String authorName) {
         Map<String,Object> map = new HashMap<>();
@@ -62,6 +71,35 @@ public class AuthorServiceImpl implements AuthorService {
         map.put("paintings", paintings);
         map.put("styles", sytles);
         return map;
+    }
+
+    @Override
+    public List<Author> getAllAuthor() {
+        return authorMapper.getAllAuthor();
+    }
+
+    @Override
+    public AuthorVo getAuthorVo(String authorName) {
+        AuthorVo authorVo = new AuthorVo();
+        // 作者 籍贯 作者画作 作者诗 作者铃印 作者擅长风格
+        Author author = authorMapper.getAuthorByName(authorName);
+        Area area = authorMapper.getAreaByAuthorName(authorName);
+        List<Painting> paintings = paintingMapper.getPaintingByAuthorName(authorName);
+        // 获取 作者所有诗 没有数据库关系
+        List<Poem> poems = null;
+        List<Seal> seals = sealMapper.getSealsByAuthorName(authorName);
+        List<PaintingStyle> goodAtStyles = styleMapper.getGoodAtStylesByAuthorName(authorName);
+        BeanUtils.copyProperties(author, authorVo);
+        authorVo.setPaintings(paintings);
+        authorVo.setPoems(poems);
+        authorVo.setSeals(seals);
+        authorVo.setGoodAtStyles(goodAtStyles);
+        return authorVo;
+    }
+
+    @Override
+    public List<Author> getLikelyAuthor(String authorName) {
+        return authorMapper.getLikelyAuhtors(authorName);
     }
 
     private List<PaintingVo> getPaintingVo(String authorName) {

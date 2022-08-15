@@ -41,12 +41,13 @@ public class PaintingServiceImpl implements PaintingService {
         return map;
     }
 
+
     @Override
     public Map<String, Object> searPaintingDetails(String paintingName) {
         Map<String, Object> map = new HashMap<>();
         Painting painting = paintingMapper.getPaintingByPaintingName(paintingName);
         if(painting == null) {
-            return null;
+            return map;
         }
         // 画作作者
         List<Author> authors = authorMapper.getAuthorByPaintingName(paintingName);
@@ -63,5 +64,16 @@ public class PaintingServiceImpl implements PaintingService {
 
         return map;
     }
+
+    @Override
+    public List<Painting> getPaintingWithTypeLimit(String type, int limit) {
+        return paintingMapper.getTenPaintingWithType(type, limit);
+    }
+
+    @Override
+    public List<Painting> getLikelyPaintings(String paintingName) {
+        return paintingMapper.getLikelyPaintings(paintingName);
+    }
+
 
 }

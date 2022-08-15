@@ -71,6 +71,21 @@
         where s.id = #{id}
         return <include refid="returnType"></include>
     </select>
+    <!--List<Author> getAllAuthor();-->
+    <select id="getAllAuthor" resultType="com.worker.model.domain.Author">
+        match(a:Author) return <include refid="returnType"></include>
+    </select>
+    <!--Author getAuthorByName(String authorName);-->
+    <select id="getAuthorByName" resultType="com.worker.model.domain.Author">
+        match(a:Author) where a.authorName= #{authorName}
+        return  <include refid="returnType"></include>
+    </select>
+    <!--List<Author> getLikelyAuhtors(String authorName);-->
+    <select id="getLikelyAuhtors" resultType="com.worker.model.domain.Author">
+        match(a:Author) where a.authorName
+        Contains #{authorName}
+        return <include refid="returnType"></include>
+    </select>
 
 
 </mapper>

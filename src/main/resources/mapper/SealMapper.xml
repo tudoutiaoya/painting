@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.worker.dao.SealMapper">
+
+    <sql id="returnType">
+        s.id as id, s.seal as seal
+    </sql>
+
+    <!--public List<Seal> getSealsByAuthorName(String authorName);-->
+    <select id="getSealsByAuthorName" resultType="com.worker.model.domain.Seal">
+        match(s:Seal)-[:author_createSeal_seal]-(a:Author)
+        where a.authorName= #{authorName}
+        return <include refid="returnType"></include>
+    </select>
+
+</mapper>

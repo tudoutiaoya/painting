@@ -72,5 +72,19 @@
         where s.id = #{id}
         return <include refid="returnType"></include>
     </select>
+    <!--List<Painting> getTenPaintingWithType(String type);-->
+    <select id="getTenPaintingWithType" resultType="com.worker.model.domain.Painting">
+        match(p:Painting)-[:painting_paintingType_type]-(t:PaintingType)
+        where t.type = #{type} and p.paintingName &lt;&gt; "NULL"
+        return <include refid="returnType"></include>
+        limit #{limit}
+    </select>
+    <!--List<Painting> getLikelyPaintings(String paintingName);-->
+    <select id="getLikelyPaintings" resultType="com.worker.model.domain.Painting">
+        match(p:Painting) where p.paintingName
+        Contains #{paintingsName}
+        return <include refid="returnType"></include>
+    </select>
+
 
 </mapper>

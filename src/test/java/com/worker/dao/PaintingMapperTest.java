@@ -38,4 +38,10 @@ class PaintingMapperTest extends TestParent {
         PaintingStyle sytle = paintingMapper.getStyleByPaintingId("7013");
         System.out.println(sytle);
     }
+
+    @Test
+    void getTenPaintingWithType() {
+        List<Painting> list = paintingMapper.getTenPaintingWithType("轴", 10);
+        System.out.println(list);
+    }
 }

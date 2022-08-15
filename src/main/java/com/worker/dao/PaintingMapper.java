@@ -70,7 +70,21 @@ public interface PaintingMapper {
      */
     List<Painting> getPaintingByPoemId(String id);
 
-
+    /**
+     * id获取画作
+     * @return
+     */
     List<Painting> getPaintingBySealId(String id);
 
+    /**
+     * 查询轴的10条画作
+     * @return
+     */
+    List<Painting> getTenPaintingWithType(@Param("type") String type,@Param("limit") int limit);
+
+    /**
+     * 获取画作 模糊查询
+     * @return
+     */
+    List<Painting> getLikelyPaintings(String paintingName);
 }

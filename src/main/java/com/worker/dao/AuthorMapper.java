@@ -74,6 +74,28 @@ public interface AuthorMapper {
      */
     List<Author> getAuthorsByAreaId(String id);
 
+    /**
+     * 获取作者铃印 by id
+     * @return
+     */
     List<Author> getAuthorsBySealId(String id);
+
+    /**
+     * 获取所有作者
+     * @return
+     */
+    List<Author> getAllAuthor();
+
+    /**
+     * 作者姓名获取作者信息
+     * @return
+     */
+    Author getAuthorByName(String authorName);
+
+    /**
+     * 获取作者 模糊查询
+     * @return
+     */
+    List<Author> getLikelyAuhtors(String authorName);
 
 }

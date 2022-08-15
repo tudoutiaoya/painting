@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.worker.dao.StyleMapper">
+
+    <sql id="returnType">
+        s.id as id, s.style as style
+    </sql>
+
+    <!--public List<PaintingStyle> getGoodAtStylesByAuthorName(String authorName);-->
+    <select id="getGoodAtStylesByAuthorName" resultType="com.worker.model.domain.PaintingStyle">
+        match(a:Author)-[:author_goodAt_style]-(s:PaintingStyle)
+        where a.authorName=#{authorName}
+        return <include refid="returnType"></include>
+    </select>
+
+</mapper>
